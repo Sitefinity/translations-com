@@ -1,13 +1,13 @@
-# Telerik.Sitefinity.Translations.TranslationsCom
-When working with the Sitefinity *Translation* module, you can benefit from a number of translation connectors that you use out-of-the-box with minimum setup. You can, however, implement your own translation connector with custom logic to serve your requirements. 
+# Progress.Sitefinity.Translations.TranslationsCom
+When working with the Sitefinity CMS *Translation* module, you can benefit from a number of translation connectors that you use out-of-the-box with minimum setup. You can, however, implement your own translation connector with custom logic to serve your requirements. 
 
 This tutorial provides you with a sample that you use to implement a custom translation connector to work with the **Translations.com** service. You first create and setup the connector and then use the *Translation* API to implement the overall translation process.   
 ## Requirements
-Sitefinity 8.1 Enterprise license
+Sitefinity CMS license
 
 ## Prerequisites
 
-Your Sitefinity Web site must be in multilingual mode meaning that you have added atleast one additinal language to the current website you are browsing. Otherwise you will not see the translations screen in the administrations tab of your application.
+Your Sitefinity CMS web site must be in multilingual mode meaning that you have added atleast one additinal language to the current website you are browsing. Otherwise you will not see the translations screen in the administrations tab of your application.
 
 You should either use country specific languages like 'en-US' and not just 'en' or specify a mapping between the country invariant and country specific language in the translations advanced settings screen: <i>Administration >> Settings >> Advanced >> Culture mappings </i> text box.
 
@@ -16,13 +16,13 @@ The Translations.com project that you are using must be configured for the langu
 
 Add the *Translation* sample project to your solution. To do this:
 
-1. In Visual Studio, open your Sitefinity web application solution.
+1. In Visual Studio, open your Sitefinity CMS web application solution.
 2. In the **SitefinityWebApp**, add a reference to the <strong>Telerik.Sitefinity.Translations.TranslationsCom</strong> assembly.
 
 
 ## Create and configure the connector
 
-To configure the *Translation.com* connector in Sitefinity:
+To configure the *Translation.com* connector in Sitefinity CMS:
 
 1. Navigate to <i>Administration >> Settings >> Advanced >> Translations >> Connectors >> Create new</i>.
 2. In <i>Connector name</i>, enter <strong>Translations.com</strong>.
@@ -142,7 +142,7 @@ Override this method if you need to set initial values to the job context.
 			<td><strong>ProcessStartProjectEvent</strong></td>
 			<td>
 				<p>
-					You use this method for processing the <code>IStartProjectTaskEvent</code> that informs the translation agenecy a new project started. The last parameter of the method stores the external ID for the project that is later used to associate the translations project with the Sitefinity project. Upon the event of succesfully sent message, the method returns **true**.
+					You use this method for processing the <code>IStartProjectTaskEvent</code> that informs the translation agenecy a new project started. The last parameter of the method stores the external ID for the project that is later used to associate the translations project with the Sitefinity CMS project. Upon the event of succesfully sent message, the method returns **true**.
 				</p>
 			</td>
 			<td>
@@ -189,7 +189,7 @@ If the exception is handled in the method, the method returns **false**. Otherwi
 <ul>
 <li><code>ISendTranslationTaskEvent</code></li> containing information about the translation to be sent
 <li><code>ITranslationJobContext</code> job context.</li>
-<li><code>translationId</code> store the external ID for the translation that is later used to associate the translated message with the Sitefinity translation.</li>
+<li><code>translationId</code> store the external ID for the translation that is later used to associate the translated message with the Sitefinity CMS translation.</li>
 </ul>
 If the method has successfully sent the translation, it returns **true**. 
 					This method checks if the process of sending the translation is successful. 
