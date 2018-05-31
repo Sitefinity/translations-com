@@ -1,12 +1,15 @@
 # Progress.Sitefinity.Translations.TranslationsCom
 
-### This repository is not automatically upgraded to latest Sitefintiy version. The repository is monitored for pull requests and fixes. The latest official version of Sitefinity that supports this sample is 9.1. Be aware that using a higher version could cause unexpected behavior. If you successfully upgrade the example to a greater version, please share your work with the community by submitting your changes via pull request.
+### Latest supported version: Sitefinity CMS 11.0.6700.0
 
 When working with the Sitefinity CMS *Translation* module, you can benefit from a number of translation connectors that you use out-of-the-box with minimum setup. You can, however, implement your own translation connector with custom logic to serve your requirements. 
 
 This tutorial provides you with a sample that you use to implement a custom translation connector to work with the **Translations.com** service. You first create and setup the connector and then use the *Translation* API to implement the overall translation process.   
 ## Requirements
-Sitefinity CMS license
+
+You must have a Sitefinity CMS license
+
+For more information, see the [System requirements](https://docs.sitefinity.com/system-requirements) for the  respective Sitefinity CMS version.
 
 ## Prerequisites
 
