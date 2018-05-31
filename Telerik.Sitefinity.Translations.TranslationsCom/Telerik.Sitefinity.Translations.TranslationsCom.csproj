@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Telerik.Sitefinity.Translations.TranslationsCom</RootNamespace>
     <AssemblyName>Telerik.Sitefinity.Translations.TranslationsCom</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,7 +38,6 @@
   <ItemGroup>
     <Reference Include="GlobalLink.Connect, Version=1.0.0.0, Culture=neutral, PublicKeyToken=946d606070618fd4, processorArchitecture=MSIL">
       <HintPath>..\packages\GlobalLink.Connect.1.0.0\lib\net45\GlobalLink.Connect.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,9 +46,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telerik.Sitefinity.Translations, Version=9.1.6110.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Sitefinity.Translations.9.1.6110.0\lib\net40\Telerik.Sitefinity.Translations.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Telerik.Sitefinity.Translations, Version=11.0.6700.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telerik.Sitefinity.Translations.11.0.6700\lib\net471\Telerik.Sitefinity.Translations.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
