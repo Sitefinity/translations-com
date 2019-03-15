@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using GlobalLink.Connect;
 using GlobalLink.Connect.Config;
@@ -64,14 +65,9 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         protected override bool ProcessSendTranslationEvent(ISendTranslationTaskEvent evnt, ITranslationJobContext context, out string translationId)
         {
             GLExchange projectDirectorClient;
-            if (!context.TryGetItem<GLExchange>(CurrentClientKey, out projectDirectorClient))
+            if (!context.TryGetItem(CurrentClientKey, out projectDirectorClient))
             {
-                var submissionTicket = evnt.ProjectExternalId;
-
                 projectDirectorClient = new GLExchange(this.ProjectDirectorConfig);
-                if (!string.IsNullOrEmpty(submissionTicket))
-                    projectDirectorClient.getSubmission(submissionTicket);
-
                 context.Items[CurrentClientKey] = projectDirectorClient;
             }
 
@@ -155,17 +151,23 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         protected override void OnEndSendTranslationJob(ITranslationJobContext context)
         {
             GLExchange projectDirectorClient;
-            if (context.TryGetItem<GLExchange>(CurrentClientKey, out projectDirectorClient))
+            if (context.TryGetItem(CurrentClientKey, out projectDirectorClient))
             {
                 bool isAtLeastOneDocumentUploaded;
-                if (context.TryGetItem<bool>(DocumentUploadedKey, out isAtLeastOneDocumentUploaded) && isAtLeastOneDocumentUploaded)
+                if (context.TryGetItem(DocumentUploadedKey, out isAtLeastOneDocumentUploaded) && isAtLeastOneDocumentUploaded)
                 {
-                    var submissionTicket = projectDirectorClient.getSubmissionTicket();
                     IStartProjectTaskEvent startProjEvent;
-                    if (context.TryGetItem<IStartProjectTaskEvent>(StartProjectEventKey, out startProjEvent))
+                    if (context.TryGetItem(StartProjectEventKey, out startProjEvent))
                     {
-                        projectDirectorClient.startSubmission();
-                        startProjEvent.Acknowledge(submissionTicket);
+                        string[] submissionTickets = projectDirectorClient.startSubmission();
+                        if (submissionTickets.Length > 0)
+                        {
+                            startProjEvent.Acknowledge(submissionTickets[0]);
+                        }
+                        else
+                        {
+                            startProjEvent.Acknowledge();
+                        }
                     }
                 }
 
@@ -195,9 +197,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             var client = this.GetClient(context);
             var target = rawMessage as Target;
 
-            var ticket = target.ticket;
-
-            var xliffFile = this.GetXliffFile(client, ticket);
+            var xliffFile = this.GetXliffFile(client, target);
             var message = new ReviewTranslationTaskEvent(xliffFile, rawMessage);
 
             return new SyncEventMessage[] { message };
@@ -264,9 +264,9 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
 
         #region Private methods
 
-        private XliffFile GetXliffFile(GLExchange client, string documentTicket)
+        private XliffFile GetXliffFile(GLExchange client, Target target)
         {
-            using (var translatedDocumentStream = client.downloadTarget(documentTicket))
+            using (var translatedDocumentStream = client.downloadCompletedTarget(target))
             {
                 var serializer = new XmlSerializer(typeof(XliffRoot));
 
@@ -278,7 +278,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         private GLExchange GetClient(ITranslationContext context)
         {
             GLExchange client;
-            if (!context.TryGetItem<GLExchange>(CurrentClientKey, out client))
+            if (!context.TryGetItem(CurrentClientKey, out client))
             {
                 client = new GLExchange(this.ProjectDirectorConfig);
                 context.Items[CurrentClientKey] = client;

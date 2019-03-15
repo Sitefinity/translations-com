@@ -1,6 +1,6 @@
 # Progress.Sitefinity.Translations.TranslationsCom
 
-### Latest supported version: Sitefinity CMS 11.0.6700.0
+### Latest supported version: Sitefinity CMS 11.2.6900.0
 
 When working with the Sitefinity CMS *Translation* module, you can benefit from a number of translation connectors that you use out-of-the-box with minimum setup. You can, however, implement your own translation connector with custom logic to serve your requirements. 
 
