@@ -36,6 +36,11 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         /// <value>The translations.com project short code.</value>
         protected string TranslationsComProjectShortCode { get; set; }
 
+        /// <summary>
+        /// Gets or sets the file format name used for the translations.com porject
+        /// </summary>
+        protected string FileFormat { get; set; }
+
         #region Initialization
         /// <summary>
         /// Initializes the connector.
@@ -51,6 +56,12 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             }
 
             this.SubmissionNamePrefix = config[ConfigKeyConstants.PrefixKey];
+
+            this.FileFormat = TranslationsComConnector.FileFormatDefault;
+            if (!string.IsNullOrEmpty(config[ConfigKeyConstants.FileFormatKey]))
+            {
+                this.FileFormat = config[ConfigKeyConstants.FileFormatKey];
+            }
         }
         #endregion
 
@@ -70,10 +81,10 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
                 projectDirectorClient = new GLExchange(this.ProjectDirectorConfig);
                 context.Items[CurrentClientKey] = projectDirectorClient;
             }
-
+                        
             var translationsComDocument = new Document
             {
-                fileformat = TranslationsComConnector.FileFormat,
+                fileformat = this.FileFormat,
 
                 // Setting the translation id as the name of the document.
                 name = string.Format("{0}.xlf", evnt.TranslationId),
@@ -346,7 +357,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         #endregion
 
         #region Fields & constants
-        private const string FileFormat = "XLIFF";
+        private const string FileFormatDefault = "XLIFF";
         private const string CurrentClientKey = "projectDirectorClient";
         private const string DocumentUploadedKey = "isTranslationComDocumentUploaded";
         private const string StartProjectEventKey = "startProjectEvent";
