@@ -57,7 +57,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
 
             this.SubmissionNamePrefix = config[ConfigKeyConstants.PrefixKey];
 
-            this.FileFormat = TranslationsComConnector.FileFormatDefault;
+            this.FileFormat = TranslationsComConnector.DefaultFileFormat;
             if (!string.IsNullOrEmpty(config[ConfigKeyConstants.FileFormatKey]))
             {
                 this.FileFormat = config[ConfigKeyConstants.FileFormatKey];
@@ -167,18 +167,12 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
                 bool isAtLeastOneDocumentUploaded;
                 if (context.TryGetItem(DocumentUploadedKey, out isAtLeastOneDocumentUploaded) && isAtLeastOneDocumentUploaded)
                 {
+                    var submissionTickets = projectDirectorClient.getSubmissionTickets();
                     IStartProjectTaskEvent startProjEvent;
                     if (context.TryGetItem(StartProjectEventKey, out startProjEvent))
                     {
-                        string[] submissionTickets = projectDirectorClient.startSubmission();
-                        if (submissionTickets.Length > 0)
-                        {
-                            startProjEvent.Acknowledge(submissionTickets[0]);
-                        }
-                        else
-                        {
-                            startProjEvent.Acknowledge();
-                        }
+                        projectDirectorClient.startSubmission();
+                        startProjEvent.Acknowledge(submissionTickets[0]);
                     }
                 }
 
@@ -357,7 +351,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         #endregion
 
         #region Fields & constants
-        private const string FileFormatDefault = "XLIFF";
+        private const string DefaultFileFormat = "XLIFF";
         private const string CurrentClientKey = "projectDirectorClient";
         private const string DocumentUploadedKey = "isTranslationComDocumentUploaded";
         private const string StartProjectEventKey = "startProjectEvent";
