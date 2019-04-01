@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using GlobalLink.Connect;
 using GlobalLink.Connect.Config;
@@ -35,6 +36,11 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         /// <value>The translations.com project short code.</value>
         protected string TranslationsComProjectShortCode { get; set; }
 
+        /// <summary>
+        /// Gets or sets the file format name used for the translations.com porject
+        /// </summary>
+        protected string FileFormat { get; set; }
+
         #region Initialization
         /// <summary>
         /// Initializes the connector.
@@ -50,6 +56,12 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             }
 
             this.SubmissionNamePrefix = config[ConfigKeyConstants.PrefixKey];
+
+            this.FileFormat = TranslationsComConnector.DefaultFileFormat;
+            if (!string.IsNullOrEmpty(config[ConfigKeyConstants.FileFormatKey]))
+            {
+                this.FileFormat = config[ConfigKeyConstants.FileFormatKey];
+            }
         }
         #endregion
 
@@ -64,20 +76,15 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         protected override bool ProcessSendTranslationEvent(ISendTranslationTaskEvent evnt, ITranslationJobContext context, out string translationId)
         {
             GLExchange projectDirectorClient;
-            if (!context.TryGetItem<GLExchange>(CurrentClientKey, out projectDirectorClient))
+            if (!context.TryGetItem(CurrentClientKey, out projectDirectorClient))
             {
-                var submissionTicket = evnt.ProjectExternalId;
-
                 projectDirectorClient = new GLExchange(this.ProjectDirectorConfig);
-                if (!string.IsNullOrEmpty(submissionTicket))
-                    projectDirectorClient.getSubmission(submissionTicket);
-
                 context.Items[CurrentClientKey] = projectDirectorClient;
             }
-
+                        
             var translationsComDocument = new Document
             {
-                fileformat = TranslationsComConnector.FileFormat,
+                fileformat = this.FileFormat,
 
                 // Setting the translation id as the name of the document.
                 name = string.Format("{0}.xlf", evnt.TranslationId),
@@ -155,17 +162,17 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         protected override void OnEndSendTranslationJob(ITranslationJobContext context)
         {
             GLExchange projectDirectorClient;
-            if (context.TryGetItem<GLExchange>(CurrentClientKey, out projectDirectorClient))
+            if (context.TryGetItem(CurrentClientKey, out projectDirectorClient))
             {
                 bool isAtLeastOneDocumentUploaded;
-                if (context.TryGetItem<bool>(DocumentUploadedKey, out isAtLeastOneDocumentUploaded) && isAtLeastOneDocumentUploaded)
+                if (context.TryGetItem(DocumentUploadedKey, out isAtLeastOneDocumentUploaded) && isAtLeastOneDocumentUploaded)
                 {
-                    var submissionTicket = projectDirectorClient.getSubmissionTicket();
+                    var submissionTickets = projectDirectorClient.getSubmissionTickets();
                     IStartProjectTaskEvent startProjEvent;
-                    if (context.TryGetItem<IStartProjectTaskEvent>(StartProjectEventKey, out startProjEvent))
+                    if (context.TryGetItem(StartProjectEventKey, out startProjEvent))
                     {
                         projectDirectorClient.startSubmission();
-                        startProjEvent.Acknowledge(submissionTicket);
+                        startProjEvent.Acknowledge(submissionTickets[0]);
                     }
                 }
 
@@ -195,9 +202,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             var client = this.GetClient(context);
             var target = rawMessage as Target;
 
-            var ticket = target.ticket;
-
-            var xliffFile = this.GetXliffFile(client, ticket);
+            var xliffFile = this.GetXliffFile(client, target);
             var message = new ReviewTranslationTaskEvent(xliffFile, rawMessage);
 
             return new SyncEventMessage[] { message };
@@ -264,9 +269,9 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
 
         #region Private methods
 
-        private XliffFile GetXliffFile(GLExchange client, string documentTicket)
+        private XliffFile GetXliffFile(GLExchange client, Target target)
         {
-            using (var translatedDocumentStream = client.downloadTarget(documentTicket))
+            using (var translatedDocumentStream = client.downloadCompletedTarget(target))
             {
                 var serializer = new XmlSerializer(typeof(XliffRoot));
 
@@ -278,7 +283,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         private GLExchange GetClient(ITranslationContext context)
         {
             GLExchange client;
-            if (!context.TryGetItem<GLExchange>(CurrentClientKey, out client))
+            if (!context.TryGetItem(CurrentClientKey, out client))
             {
                 client = new GLExchange(this.ProjectDirectorConfig);
                 context.Items[CurrentClientKey] = client;
@@ -346,7 +351,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         #endregion
 
         #region Fields & constants
-        private const string FileFormat = "XLIFF";
+        private const string DefaultFileFormat = "XLIFF";
         private const string CurrentClientKey = "projectDirectorClient";
         private const string DocumentUploadedKey = "isTranslationComDocumentUploaded";
         private const string StartProjectEventKey = "startProjectEvent";
