@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 using GlobalLink.Connect;
 using GlobalLink.Connect.Config;
 using GlobalLink.Connect.Model;
+using Telerik.Sitefinity.Translations;
 using Telerik.Sitefinity.Translations.Events;
+using Telerik.Sitefinity.Translations.TranslationsCom;
 using Telerik.Sitefinity.Translations.Xliff.Model;
+using static Telerik.Sitefinity.Translations.TranslationsCom.TranslationsComConnector;
 
+[assembly: TranslationConnector(name: TranslationsComConnector.ConnectorName,
+                                connectorType: typeof(TranslationsComConnector),
+                                title: TranslationsComConnector.ConnectorTitle,
+                                enabled: true,
+                                removeHtmlTags: false,
+                                parameters: new string[] { ConfigKeyConstants.UrlKey,
+                                                           ConfigKeyConstants.UsernameKey,
+                                                           ConfigKeyConstants.PasswordKey,
+                                                           ConfigKeyConstants.UseragentKey,
+                                                           ConfigKeyConstants.ProjectKey,
+                                                           ConfigKeyConstants.FileFormatKey,
+                                                           ConfigKeyConstants.PrefixKey })]
 namespace Telerik.Sitefinity.Translations.TranslationsCom
 {
     /// <summary>
@@ -351,6 +365,9 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         #endregion
 
         #region Fields & constants
+        internal const string ConnectorName = "TranslationsCom";
+        internal const string ConnectorTitle = "Export to Translations.com";
+
         private const string DefaultFileFormat = "XLIFF";
         private const string CurrentClientKey = "projectDirectorClient";
         private const string DocumentUploadedKey = "isTranslationComDocumentUploaded";
