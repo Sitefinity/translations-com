@@ -44,7 +44,7 @@ To configure the *Translation.com* connector in Sitefinity CMS:
 3. To enable the connector, for <strong>Translations.com</strong> in the <i>Enabled</i> field, enter <strong>true</strong>.
 4. Save your changes.
 
-##API Overview: TranslationsComConnector
+## API Overview: TranslationsComConnector
 The <strong>TranslationsComConnector</strong> class has properties that hold information about the connector. The following table summarizes these API properties.
 
 **NOTE:** In this tutorial, you do not use all of the methods listed below. You can use the table below as reference, as well.
