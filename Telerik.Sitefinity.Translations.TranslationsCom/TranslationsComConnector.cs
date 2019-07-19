@@ -15,7 +15,7 @@ using static Telerik.Sitefinity.Translations.TranslationsCom.TranslationsComConn
 [assembly: TranslationConnector(name: TranslationsComConnector.ConnectorName,
                                 connectorType: typeof(TranslationsComConnector),
                                 title: TranslationsComConnector.ConnectorTitle,
-                                enabled: true,
+                                enabled: false,
                                 removeHtmlTags: false,
                                 parameters: new string[] { ConfigKeyConstants.UrlKey,
                                                            ConfigKeyConstants.UsernameKey,
@@ -128,14 +128,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             return false;
         }
 
-        /// <summary>
-        /// TODOTR: document
-        /// </summary>
-        /// <param name="evnt">TODOTR: document event</param>
-        /// <param name="context">TODOTR: document context</param>
-        /// <param name="projectId">TODOTR: document projectId</param>
-        /// <returns>TODOTR: document returns</returns>
-
+        /// <inheritdoc />
         protected override bool ProcessStartProjectEvent(IStartProjectTaskEvent evnt, ITranslationJobContext context, out string projectId)
         {
             projectId = string.Empty;
@@ -158,21 +151,14 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             return false;
         }
 
-        /// <summary>
-        /// TODOTR: document
-        /// </summary>
-        /// <param name="evnt">TODOTR: document event</param>
-        /// <returns>TODOTR: document returns</returns>
+        /// <inheritdoc />
         protected override bool ProcessCompleteProjectEvent(ICompleteProjectTaskEvent evnt)
         {
             // Just acknowledge event
             return true;
         }
 
-        /// <summary>
-        /// TODOTR: document
-        /// </summary>
-        /// <param name="context">TODOTR: document context</param>
+        /// <inheritdoc />
         protected override void OnEndSendTranslationJob(ITranslationJobContext context)
         {
             GLExchange projectDirectorClient;

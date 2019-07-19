@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Telerik.Sitefinity.Translations.TranslationsCom</RootNamespace>
     <AssemblyName>Telerik.Sitefinity.Translations.TranslationsCom</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -47,7 +47,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Telerik.Sitefinity.Translations, Version=12.1.7100.0, Culture=neutral, PublicKeyToken=b28c218413bdf563, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telerik.Sitefinity.Translations.12.1.7100\lib\net48\Telerik.Sitefinity.Translations.dll</HintPath>
+      <HintPath>..\packages\Telerik.Sitefinity.Translations.12.1.7100\lib\net472\Telerik.Sitefinity.Translations.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

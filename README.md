@@ -1,6 +1,6 @@
 # Progress.Sitefinity.Translations.TranslationsCom
 
-### Latest supported version: Sitefinity CMS 11.2.6900.0
+### Latest supported version: Sitefinity CMS 12.1.7100.0
 
 When working with the Sitefinity CMS *Translation* module, you can benefit from a number of translation connectors that you use out-of-the-box with minimum setup. You can, however, implement your own translation connector with custom logic to serve your requirements. 
 
@@ -24,27 +24,25 @@ Add the *Translation* sample project to your solution. To do this:
 
 1. In Visual Studio, open your Sitefinity CMS web application solution.
 2. In the **SitefinityWebApp**, add a reference to the <strong>Telerik.Sitefinity.Translations.TranslationsCom</strong> assembly.
+3. Build the solution. Once connector dll is available in your /bin folder, connector will be available for configuration in Sitefinity settings.
 
 
-## Create and configure the connector
+## Configure the connector
 
 To configure the *Translation.com* connector in Sitefinity CMS:
 
-1. Navigate to <i>Administration >> Settings >> Advanced >> Translations >> Connectors >> Create new</i>.
-2. In <i>Connector name</i>, enter <strong>Translations.com</strong>.
-3. In <i>Connector title</i>, enter <strong>Translations.com</strong>.
-4. In <i>Connector type</i>, enter <strong>Telerik.Sitefinity.Translations.TranslationsCom.TranslationsComConnector</strong>.
-5. To enable the connector, in the <i>Enabled</i> field, enter <strong>true</strong>.
-6. Save your changes.
-7. Expand the <i>Parameters</i> section of the newly created connector and create the following <i>Keys</i>: 
+1. Navigate to <i>Administration >> Settings >> Advanced >> Translations >> Connectors </i>.
+2. Expand the <i>Parameters</i> section of the For <strong>Translations.com</strong> connector, enter and save the following <i>Keys</i>: 
    **NOTE:** The following parametersm except for the last one, must be provided by Translations.com.
- * <strong>url</strong> </br>In <i>Value</i>, enter the URL of the connector
+ * <strong>url</strong> </br>In <i>Value</i>, enter the URL of the Project Director
  * <strong>username</strong> </br>In <i>Value</i>, enter the username
  * <strong>password</strong> </br>In <i>Value</i>, enter the password
  * <strong>userAgent</strong> </br>In <i>Value</i>, enter the agent
  * <strong>project</strong> </br>In <i>Value</i>, enter the name of the project
  * <strong>fileFormatProfile</strong> </br>In <i>Value</i>, enter the file format that the connector accepts. For example, enter **XLIFF**.
  * <strong>submissionPrefix</strong> </br>In <i>Value</i>, enter the prefix for the translation submission name that is generated and sent to the connector.
+4. To enable the connector, for <strong>Translations.com</strong> in the <i>Enabled</i> field, enter <strong>true</strong>.
+5. Save your changes.
 
 ##API Overview: TranslationsComConnector
 The <strong>TranslationsComConnector</strong> class has properties that hold information about the connector. The following table summarizes these API properties.
