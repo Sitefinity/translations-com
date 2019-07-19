@@ -33,7 +33,7 @@ To configure the *Translation.com* connector in Sitefinity CMS:
 
 1. Navigate to <i>Administration >> Settings >> Advanced >> Translations >> Connectors </i>.
 2. Expand the <i>Parameters</i> section of the For <strong>Translations.com</strong> connector, enter and save the following <i>Keys</i>: 
-   **NOTE:** The following parametersm except for the last one, must be provided by Translations.com.
+   **NOTE:** The following parameters except for the last one, must be provided by Translations.com.
  * <strong>url</strong> </br>In <i>Value</i>, enter the URL of the Project Director
  * <strong>username</strong> </br>In <i>Value</i>, enter the username
  * <strong>password</strong> </br>In <i>Value</i>, enter the password
@@ -41,8 +41,8 @@ To configure the *Translation.com* connector in Sitefinity CMS:
  * <strong>project</strong> </br>In <i>Value</i>, enter the name of the project
  * <strong>fileFormatProfile</strong> </br>In <i>Value</i>, enter the file format that the connector accepts. For example, enter **XLIFF**.
  * <strong>submissionPrefix</strong> </br>In <i>Value</i>, enter the prefix for the translation submission name that is generated and sent to the connector.
-4. To enable the connector, for <strong>Translations.com</strong> in the <i>Enabled</i> field, enter <strong>true</strong>.
-5. Save your changes.
+3. To enable the connector, for <strong>Translations.com</strong> in the <i>Enabled</i> field, enter <strong>true</strong>.
+4. Save your changes.
 
 ##API Overview: TranslationsComConnector
 The <strong>TranslationsComConnector</strong> class has properties that hold information about the connector. The following table summarizes these API properties.
