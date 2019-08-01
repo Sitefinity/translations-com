@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 using GlobalLink.Connect;
 using GlobalLink.Connect.Config;
 using GlobalLink.Connect.Model;
+using Telerik.Sitefinity.Translations;
 using Telerik.Sitefinity.Translations.Events;
+using Telerik.Sitefinity.Translations.TranslationsCom;
 using Telerik.Sitefinity.Translations.Xliff.Model;
+using static Telerik.Sitefinity.Translations.TranslationsCom.TranslationsComConnector;
 
+[assembly: TranslationConnector(name: TranslationsComConnector.ConnectorName,
+                                connectorType: typeof(TranslationsComConnector),
+                                title: TranslationsComConnector.ConnectorTitle,
+                                enabled: false,
+                                removeHtmlTags: false,
+                                parameters: new string[] { ConfigKeyConstants.UrlKey,
+                                                           ConfigKeyConstants.UsernameKey,
+                                                           ConfigKeyConstants.PasswordKey,
+                                                           ConfigKeyConstants.UseragentKey,
+                                                           ConfigKeyConstants.ProjectKey,
+                                                           ConfigKeyConstants.FileFormatKey,
+                                                           ConfigKeyConstants.PrefixKey })]
 namespace Telerik.Sitefinity.Translations.TranslationsCom
 {
     /// <summary>
@@ -114,14 +128,7 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             return false;
         }
 
-        /// <summary>
-        /// TODOTR: document
-        /// </summary>
-        /// <param name="evnt">TODOTR: document event</param>
-        /// <param name="context">TODOTR: document context</param>
-        /// <param name="projectId">TODOTR: document projectId</param>
-        /// <returns>TODOTR: document returns</returns>
-
+        /// <inheritdoc />
         protected override bool ProcessStartProjectEvent(IStartProjectTaskEvent evnt, ITranslationJobContext context, out string projectId)
         {
             projectId = string.Empty;
@@ -144,21 +151,14 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
             return false;
         }
 
-        /// <summary>
-        /// TODOTR: document
-        /// </summary>
-        /// <param name="evnt">TODOTR: document event</param>
-        /// <returns>TODOTR: document returns</returns>
+        /// <inheritdoc />
         protected override bool ProcessCompleteProjectEvent(ICompleteProjectTaskEvent evnt)
         {
             // Just acknowledge event
             return true;
         }
 
-        /// <summary>
-        /// TODOTR: document
-        /// </summary>
-        /// <param name="context">TODOTR: document context</param>
+        /// <inheritdoc />
         protected override void OnEndSendTranslationJob(ITranslationJobContext context)
         {
             GLExchange projectDirectorClient;
@@ -351,6 +351,9 @@ namespace Telerik.Sitefinity.Translations.TranslationsCom
         #endregion
 
         #region Fields & constants
+        internal const string ConnectorName = "TranslationsCom";
+        internal const string ConnectorTitle = "Export to Translations.com";
+
         private const string DefaultFileFormat = "XLIFF";
         private const string CurrentClientKey = "projectDirectorClient";
         private const string DocumentUploadedKey = "isTranslationComDocumentUploaded";
