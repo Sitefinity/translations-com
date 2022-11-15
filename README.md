@@ -4,6 +4,9 @@
 
 > Documentation article: [Custom translation connector](https://www.progress.com/documentation/sitefinity-cms/custom-translation-connector).
 
+>**IMPORTANT**: This repository may not be compatible with the latest or your current Sitefinity CMS version. If you want to use the repository with a specific Sitefinity CMS version, either upgrade the code from this repository or your Sitefinity CMS project to ensure compatibility.<br/>
+The dev team monitors the repository. You can create a GitHub issue to submit feedback or report bugs. Or make a pull request to submit project enhancements or compatibility changes that support new Sitefinity CMS versions.
+
 When working with the Sitefinity CMS *Translation* module, you can benefit from a number of translation connectors that you use out-of-the-box with minimum setup. You can, however, implement your own translation connector with custom logic to serve your requirements. 
 
 This tutorial provides you with a sample that you use to implement a custom translation connector to work with the [Translations.com](https://translations.com/) service. You first create and setup the connector and then use the *Translation* API to implement the overall translation process.
